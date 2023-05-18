@@ -13,6 +13,8 @@ export const NotFoundBlock : React.FC = () => {
 
       <p className={styles.description}>На жаль, даної сторінки не існує у нашому інтернет-магазині</p>
 
+      <p>Не сумуйте!!!</p>
+
     </div>
   )
 }
