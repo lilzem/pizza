@@ -3,12 +3,13 @@ import Icon from '@mdi/react';
 import { mdiMagnify, mdiWindowClose } from '@mdi/js';
 import styles from './Search.module.scss'
 import debounce  from 'lodash.debounce'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectSearch, setSearchValue } from '../../redux/slices/filterSlice';
+import { useAppDispatch } from '../../redux/store';
 
 const Search : React.FC = () => {
 
-const dispatch = useDispatch();
+const dispatch = useAppDispatch();
 const [value, setValue] = React.useState('');    
 const searchValue  = useSelector((selectSearch))
 const inputRef = React.useRef<HTMLInputElement>(null); 
@@ -40,7 +41,7 @@ const onClickClear = () => {
             value={value} 
             className={styles.input} 
             placeholder='Пошук піци...' />
-        {searchValue &&  <Icon onClick={onClickClear} className={styles.close_icon} path={mdiWindowClose} size={1} />}
+        {searchValue && <span onClick={onClickClear}><Icon className={styles.close_icon} path={mdiWindowClose} size={1} /></span>}
     </div>
   )
 }

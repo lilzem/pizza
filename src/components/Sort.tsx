@@ -1,24 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Icon from '@mdi/react';
 import { mdiSort } from '@mdi/js';
-import { useSelector, useDispatch } from "react-redux";
-import { setSortType, setSortOrder, selectFilter} from "../redux/slices/filterSlice";
+import { useSelector } from "react-redux";
+import { setSortType, setSortOrder, selectFilter, SortBy, Order} from "../redux/slices/filterSlice";
+import { useAppDispatch } from '../redux/store';
 
-type SortItem = {
-  name : string;
-  sortProperty : string;
-}
-
-type SortOrderItem = {
-  name : string;
-  order : string;
-}
-
-export const sortList: SortItem[] = [{name : 'популярности', sortProperty : 'rating'},
+export const sortList: SortBy[] = [{name : 'популярности', sortProperty : 'rating'},
                         {name : 'цене', sortProperty : 'price'},
                         {name : 'алфавиту', sortProperty : 'title'}];
 
-export const sortOrderList: SortOrderItem[] = [ {name : 'за зростанням', order : 'asc'},
+export const sortOrderList: Order[] = [ {name : 'за зростанням', order : 'asc'},
           {name : 'за спаданням', order : 'desc'}];
 
           
@@ -30,16 +21,16 @@ const Sort: React.FC = () => {
   const sortRef = useRef<HTMLDivElement>(null);
   
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {sortProperty, sortOrder} = useSelector(selectFilter);
   
 
-  const onClickSortType = ( obj: SortItem) => {
+  const onClickSortType = ( obj: SortBy) => {
     dispatch(setSortType(obj));
     setOpen(false);
   }
 
-  const onClickSortOrder = (obj : SortOrderItem) => {
+  const onClickSortOrder = (obj : Order) => {
     dispatch(setSortOrder(obj));
     setOpenSort(false);
   }
@@ -92,7 +83,9 @@ const Sort: React.FC = () => {
               </svg>
               <b>Сортировка по:</b>
               <span onClick={toggleSortVisibility}>{sortProperty.name}</span>
-              <Icon onClick={toggleOrderVisibility} className='sort__icon' path={mdiSort} size={1} color='#fe5f1e'/>
+              <span onClick={toggleOrderVisibility}>
+                <Icon className='sort__icon' path={mdiSort} size={1} color='#fe5f1e'/>
+              </span>
             </div>
             {open && (
             <div className="sort__popup">

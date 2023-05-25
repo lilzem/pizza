@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { addItem, selectPizzaItemById } from '../../redux/slices/cartSlice';
+import { useAppDispatch } from '../../redux/store';
 
 type PizzaBlockProps = {
   id : number;
@@ -13,7 +14,7 @@ type PizzaBlockProps = {
 }
 
 const PizzaBlock : React.FC<PizzaBlockProps> = ({id, title, price, imageUrl, types, sizes}) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     
 
     const typesName = ['тонкое', 'традиционное']

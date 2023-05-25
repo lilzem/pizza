@@ -18,7 +18,7 @@ export enum STATUS {
   REGECTED = 'error'
 }
 
-interface PizzaSliceState {
+export interface PizzaSliceState {
   items : Pizza[];
   status : STATUS
 }

@@ -1,6 +1,6 @@
 import React from 'react'
-import { useDispatch } from "react-redux";
 import { addItem, removeItem, minusItem } from '../../redux/slices/cartSlice';
+import { useAppDispatch } from '../../redux/store';
 
 type CartItemProps = {
   id : number;
@@ -13,7 +13,7 @@ type CartItemProps = {
 
 
 const CartItem : React.FC<CartItemProps> = ({id, title, type, price, count, imageUrl}) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onClickRemove = () => {
     if(window.confirm('Ви справді хочете удалити цей товар?')) {

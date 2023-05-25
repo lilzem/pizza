@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-type SortBy = {
+export type SortBy = {
   name: string;
   sortProperty: 'rating' | 'price' | 'title';
 }
 
-type Order = {
+export type Order = {
   name: string;
   order: 'desc' | 'asc'
 }

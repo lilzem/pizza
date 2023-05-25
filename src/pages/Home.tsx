@@ -4,17 +4,18 @@ import Categories from "../components/Categories";
 import Sort, { sortList, sortOrderList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectFilter, setCategoryId, setFilter} from "../redux/slices/filterSlice";
 import qs from "qs"
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
+import { useAppDispatch } from "../redux/store";
 
 export const Home: React.FC = () => {
 
 const navigate = useNavigate();
-const dispatch = useDispatch();
+const dispatch = useAppDispatch();
 const isSearch = useRef(false);
 const isMounted = useRef(false);
 
@@ -35,6 +36,7 @@ const getPizzas = () => {
   const search = searchValue ? `search=${searchValue}` : '';
   const sortBy = sortProperty ? `&sortBy=${sortProperty.sortProperty}` : '';
   const order = sortOrder ? `&order=${sortOrder.order}` : '';
+ 
   dispatch(fetchPizzas({
     category,
     search,
@@ -52,11 +54,15 @@ useEffect(() => {
     const _sortProperty = sortList.find((obj) => obj.sortProperty === params.sortProperty);
     const _sortOrder = sortOrderList.find((obj) => obj.order === params.sortOrder);
     
-
+    if (!_sortOrder || !_sortProperty) {
+      return;
+    }
     dispatch(setFilter({
       ...params,
       sortProperty: _sortProperty,
-      sortOrder: _sortOrder  
+      sortOrder: _sortOrder,
+      categoryId: 0,
+      searchValue: ""
     }))
 
     isSearch.current = true;
